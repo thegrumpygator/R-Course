@@ -1,0 +1,17 @@
+{
+    "contents" : "complete <- function(directory, id = 1:332) {\n  ## 'directory' is a character vector of length 1 indicating\n  ## the location of the CSV files\n  \n  ## 'id' is an integer vector indicating the monitor ID numbers\n  ## to be used\n  \n  ## Return a data frame of the form:\n  ## id nobs\n  ## 1  117\n  ## 2  1041\n  ## ...\n  ## where 'id' is the monitor ID number and 'nobs' is the\n  ## number of complete cases\n  library(stringr)\n  id2 <- str_pad(id,3,pad=\"0\")\n  id_str <- paste(directory, \"/\", id2, \".csv\", sep = \"\")\n  \n  data <- sapply(id_str, read.csv, simplify=FALSE)\n  clean_data<-lapply(data, function(x) x[complete.cases(x),])\n  #b<-sapply(clean_data, nrow)#, simplify=TRUE, USE.NAMES=FALSE)\n  b<-vapply(clean_data, nrow, integer(1), USE.NAMES=FALSE)#, simplify=TRUE, USE.NAMES=FALSE)\n  for(i in 1:length(id))\n  {\n    sprintf(\"%i %i %i\", i, id[i], b[i] ) \n  }\n  c1<-c(1:length(id))\n  answer<-cbind(id, b)\n  dimnames(answer)<-list(c(1:length(id)), c(\"id\", \"nobs\"))\n  #dimnames(answer)[[1]]<-c(1:length(id))\n  #dimnames(answer)[[2]]<-c(\"id\", \"nobs\")\n  as.data.frame(answer)\n}",
+    "created" : 1428971926011.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3370058038",
+    "id" : "DBBB59C4",
+    "lastKnownWriteTime" : 1429059388,
+    "path" : "N:/Users/Brian/Documents/R_Coursera/R-Course/Project1/complete.R",
+    "project_path" : "complete.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : true,
+    "type" : "r_source"
+}
